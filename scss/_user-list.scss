@@ -1,4 +1,4 @@
-/* ~~~ SETUP ~~~ */
+/* TODO: ~~~ SETUP ~~~ */
 $user-list-font: 'Rubik', sans-serif;
 $user-list-color-text-main: #dddddd;
 $user-list-color-text-sec: #7da4cd;
@@ -7,6 +7,10 @@ $user-list-color-bg-sec: #192532;
 $user-list-color-bg-sec-hover: #405A74;
 $user-list-color-underline: #111D29;
 
+// TODO: Media breakpoints may need re-setting if component used as not full width!
+// If so, set width of side objects below
+$side-objects-width: 0px;
+
 /* Local grid */
 @for $i from 1 through 24 {
   .user-list--col-#{$i} {
@@ -14,7 +18,7 @@ $user-list-color-underline: #111D29;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 600px + $side-objects-width) {
   .user-list--col-24 {
     width: 100%;
   }
@@ -24,6 +28,11 @@ $user-list-color-underline: #111D29;
       width: 50%;
     }
   }
+}
+
+body:before {
+  display: none;
+  content: '#{$side-objects-width}';
 }
 
 /* Default styling */
@@ -314,9 +323,9 @@ $user-list-color-underline: #111D29;
 }
 
 /* Media queries */
-// TODO: WARNING! Breakpoints may need re-setting if component used as not full width!
 
-@media (max-width: 600px) {
+
+@media (max-width: 600px + $side-objects-width) {
   .user-list {
     $par: &;
 

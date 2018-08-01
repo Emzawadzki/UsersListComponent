@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box; }
 
-/* ~~~ SETUP ~~~ */
+/* TODO: ~~~ SETUP ~~~ */
 /* Local grid */
 .user-list--col-1 {
   width: 4.16667%; }
@@ -126,6 +126,10 @@
     width: 50%; }
   .user-list--col-23 {
     width: 50%; } }
+
+body:before {
+  display: none;
+  content: "0px"; }
 
 /* Default styling */
 .user-list {

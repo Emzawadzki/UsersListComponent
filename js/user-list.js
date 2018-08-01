@@ -1,3 +1,4 @@
+// TODO: remove if imported in your main script file
 import '../scss/main.scss';
 
 /**
@@ -133,8 +134,13 @@ document.addEventListener('DOMContentLoaded', function(e) {
    * Change popup direction function
    */
   function setPopup(popup, parentElement, scrolledElement) {
+    // get flexible breakpoint
+    let sideObjWidth = (window.getComputedStyle(document.querySelector('body'), ':before').getPropertyValue('content'));
+    sideObjWidth = parseInt(sideObjWidth.slice(1, sideObjWidth.length - 1));
+    sideObjWidth = sideObjWidth ? sideObjWidth : 0;
+    
     let popupBreakPoint = 240;
-    if(window.innerWidth <= 600) {
+    if(window.innerWidth <= 600 + sideObjWidth) {
       popupBreakPoint = 180;
     }
 
@@ -148,13 +154,13 @@ document.addEventListener('DOMContentLoaded', function(e) {
   }
 
   /**
-   * Change popup orientation on scroll (optional)
+   * Change popup orientation on scroll or resize (optional)
    */
 
   let popupElement = null;
   let popupElementPar = null;
 
-  userList.addEventListener('scroll', () => {
+  function changePopupOrientation() {
     popupElement = document.getElementById('js-user-list-popup');
 
     if(popupElement) {
@@ -163,7 +169,10 @@ document.addEventListener('DOMContentLoaded', function(e) {
     }
     
     return false;
-  })
+  }
+
+  userList.addEventListener('scroll', changePopupOrientation);
+  window.addEventListener('resize', changePopupOrientation);
 
 });
 
