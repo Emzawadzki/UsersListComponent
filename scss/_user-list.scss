@@ -1,0 +1,400 @@
+/* ~~~ SETUP ~~~ */
+$user-list-font: 'Rubik', sans-serif;
+$user-list-color-text-main: #dddddd;
+$user-list-color-text-sec: #7da4cd;
+$user-list-color-bg-main: #22303F;
+$user-list-color-bg-sec: #192532;
+$user-list-color-bg-sec-hover: #405A74;
+$user-list-color-underline: #111D29;
+
+/* Local grid */
+@for $i from 1 through 24 {
+  .user-list--col-#{$i} {
+    width: (100/24 * $i) * 1%
+  }
+}
+
+@media (max-width: 600px) {
+  .user-list--col-24 {
+    width: 100%;
+  }
+
+  @for $i from 1 through 23 {
+    .user-list--col-#{$i} {
+      width: 50%;
+    }
+  }
+}
+
+/* Default styling */
+.user-list {
+  $par: &;
+  margin: 0 auto;
+  font-family: $user-list-font;
+  font-size: 14px;
+  position: relative;
+  max-width: 664px;
+  color: $user-list-color-text-main;
+  padding-bottom: 6px;
+  overflow: hidden;
+
+  &:after, &:before {
+    position: absolute;
+    content: '';
+    display: block;
+    z-index: 5;
+    left: 12px;
+    right: 12px;
+    bottom: 6px;
+    height: 4px;
+    background: $user-list-color-bg-sec;
+    border-radius: 0 0 4px 4px;
+    border-top: 2px solid $user-list-color-bg-main;
+    box-shadow: 0 -2px 4px 0px $user-list-color-bg-sec;
+  }
+
+  &:before {
+    bottom: initial;
+    top: 44px;
+    border-radius: 4px 4px 0 0;
+    border-top: none;
+    border-bottom: 2px solid $user-list-color-bg-main;
+    box-shadow: 0 2px 4px 0px $user-list-color-bg-sec;
+  }
+
+  &__header {
+    padding: 0 24px;
+  }
+
+  &__tab-head {
+    display: flex;
+    list-style-type: none;
+    margin: 0 auto;
+    max-width: 640px;
+  }
+
+  &__title {
+    color: $user-list-color-text-sec;
+    text-shadow: 0px 1px 1px #000;
+    text-align: start;
+    font-size: 18px;
+    font-weight: normal;
+    padding: 15px 15px;
+  }
+
+  &__body {
+    max-height: 314px;
+    display: block;
+    overflow-y: scroll;
+    position: relative;
+    padding: 0 12px;
+    z-index: 1;
+    margin-right: -17px;
+    margin-bottom: 6px;
+    list-style-type: none;
+  }
+
+  &__user {
+    background: $user-list-color-bg-sec;
+    display: flex;
+    z-index: 10;
+    height: 39px;
+    padding: 0 12px;
+    position: relative;
+    margin-bottom: 1px;
+    transition: 0.5s transform;
+    &:after, &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: $user-list-color-bg-sec;
+      height: 1px;
+      transform: translate(0, 100%);
+      transition: 0.5s all;
+    }
+    &:after {
+      left: 12px;
+      right: 12px;
+      background: #111D29;
+    }
+  }
+
+  &__row {
+    list-style-type: none;
+    display: flex;
+    flex-grow: 1;
+    &:after {
+      display: block;
+      content: '';
+      position: absolute;
+      width: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      transform: translate(100%, 0);
+      background: $user-list-color-bg-sec;
+      z-index: -1;
+      transition: 0.5s width;
+    }
+  }
+
+  &__data {
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    &:last-of-type {
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+  }
+
+  &__button {
+    color: #873037;
+    background: none;
+    outline: none;
+    border: none;
+    font-size: 16px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6px 0 18px;
+    transition: 0.5s width;
+  }
+
+  &__message {
+    font-family: $user-list-font;
+    font-size: 12px;
+    font-weight: 400;
+    display: block;
+    opacity: 0;
+  }
+
+  &__icon {
+    display: block;
+  }
+
+  &__popup {
+    position: absolute;
+    bottom: 0;
+    left: 30px;
+    right: 30px;
+    height: 30px;
+    display: flex;
+    transform: translate(0, 100%);
+    background: #2D4053;
+    border-radius: 0 0 4px 4px;
+    overflow: hidden;
+    transition: 0.3s all;
+  }
+
+  &__confirm-msg {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    padding-left: 12px;
+    font-size: 12px;
+  }
+
+  &__cancel-btn, &__confirm-btn {
+    display: block;
+    width: 12%;
+    height: 100%;
+    background: none;
+    border: none;
+    border-left: 1px solid $user-list-color-bg-sec;
+    color: $user-list-color-text-main;
+    &:hover {
+      background: #873037;
+    }
+  }
+
+  &__confirm-btn:hover {
+    background: #367237;
+  }
+
+  &__break {
+    width: 100%;
+    margin: 0 auto;
+    background: $user-list-color-bg-sec;
+    position: relative;
+    height: 1px;
+    border: none;
+    &:before {
+      position: absolute;
+      content: '';
+      display: block;
+      background: #111D29;
+      right: 12px;
+      left: 12px;
+      top: 0;
+      bottom: 0;
+    }
+  }
+
+  // hover states
+  &__user:hover {
+    background: $user-list-color-bg-sec-hover;
+    transform: translate(-12px, 0);
+
+    &:before {
+      left: 12px;
+      right: -12px;
+    }
+
+    &:after {
+      left: 24px;
+      right: 0px;
+    }
+
+    #{$par}__row:after {
+      width: 12px;
+    }
+
+    #{$par}__data:last-of-type {
+      margin: 0;
+    }
+
+    #{$par}__button {
+      color: $user-list-color-text-main;
+      position: absolute;
+      background: #F43B3B;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: calc(100% + 12px);
+      transform: translate(12px, 0);
+      padding: 0 18px;
+    }
+
+    #{$par}__message {
+      opacity: 1;
+    }
+  }
+
+  // changed states
+
+  &--active {
+    z-index: 50;
+    background: $user-list-color-bg-sec-hover;
+    transform: translate(-12px, 0);
+
+    &:before {
+      left: 12px;
+      right: -12px;
+    }
+
+    &:after {
+      left: 24px;
+      right: 0px;
+    }
+
+    #{$par}__row:after, &:hover #{$par}__row:after {
+      width: 24px;
+      background: $user-list-color-bg-sec-hover;
+    }
+
+    #{$par}__button {
+      display: none;
+    }
+  }
+
+  &--popup-upside-down {
+    bottom: initial;
+    top: 0;
+    transform: translate(0, -100%);
+    border-radius: 4px 4px 0 0;
+  }
+}
+
+/* Media queries */
+// TODO: WARNING! Breakpoints may need re-setting if component used as not full width!
+
+@media (max-width: 600px) {
+  .user-list {
+    $par: &;
+
+    &:before {
+      top: 70px;
+    }
+
+    &__header {
+      padding: 7px 12px;
+    }
+
+    &__tab-head {
+      flex-wrap: wrap;
+    }
+
+    &__title {
+      padding: 5px 15px;
+      text-align: center;
+    }
+
+    &__user {
+      padding: 0;
+      height: 59px;
+    }
+
+    &__row {
+      flex-wrap: wrap;
+      &:hover:after {
+        display: block;
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        transform: translate(100%, 0);
+        width: 24px;
+        background: $user-list-color-bg-sec-hover;
+        z-index: -1;
+      }
+    }
+
+    &__data {
+      justify-content: center;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: clip;
+    }
+
+    &__button {
+      flex-grow: 0;
+      justify-content: center;
+      width: 40%;
+      padding: 0 6px;
+    }
+
+    &__message {
+      font-size: 10px;
+      display: none;
+    }
+
+    &__popup {
+      height: 60px;
+    }
+
+    &__cancel-btn, &__confirm-btn {
+      width: 20%;
+    }
+
+    &__user:hover {
+      #{$par}__button {
+        padding: 0 6px;
+        width: 40%;
+        position: initial;
+        justify-content: space-around;
+      }
+      #{$par}__message {
+        display: block;
+      }
+    }
+  }
+}
